@@ -11,7 +11,7 @@ class RegistrationsController < ApplicationController
   # direct them to the new user page via the route above.
   #
   # Create a route that handles a POST HTTP request from the
-  # registration form
+  # registration form, then see what /new has to say.
 
 
   get '/new' do
