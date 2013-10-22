@@ -8,7 +8,7 @@ class RegistrationsController < ApplicationController
   # You'll need a way to send the registration form here.
   # Use your battle-hardened text editor to create the
   # appropriate route, look at the request, and then
-  # direct them to the new user page via the route above.
+  # direct them to the new user page via the /new route.
   #
   # Create a route that handles a POST HTTP request from the
   # registration form, then see what /new has to say.
