@@ -31,4 +31,4 @@ class RegistrationsController < ApplicationController
     # them what they've done wrong?
   end
 
-  end
+end
