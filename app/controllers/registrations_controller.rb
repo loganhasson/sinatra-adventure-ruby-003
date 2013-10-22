@@ -4,6 +4,16 @@ class RegistrationsController < ApplicationController
     erb :register
   end
 
+  # Registration!
+  # You'll need a way to send the registration form here.
+  # Use your battle-hardened text editor to create the
+  # appropriate route, look at the request, and then
+  # direct them to the new user page via the route above.
+  #
+  # Create a route that handles a POST HTTP request from the
+  # registration form
+
+
   get '/new' do
     # You will need to send properly registered people to me
     # and render a template that will tell them they
@@ -21,8 +31,4 @@ class RegistrationsController < ApplicationController
     # them what they've done wrong?
   end
 
-  # You'll need a way to send the registration form here.
-  # Use your battle-hardened text editor to create the
-  # appropriate route, look at the request, and then
-  # direct them to the new user page via the route above.
-end
+  end
