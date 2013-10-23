@@ -10,6 +10,10 @@ class RegistrationsController < ApplicationController
   # appropriate route, look at the request, and then
   # direct them to the new user page via the /new route.
 
+  post '/register' do
+    redirect "/new?email=#{params[:email]}"
+  end
+
   # TODO: Create a route that handles a POST HTTP request from the
   # registration form, then see what /new has to say.
 
@@ -19,7 +23,11 @@ class RegistrationsController < ApplicationController
 
 
   get '/new' do
-    throw Unauthorized unless user_registered?
+    if !user_registered?
+      redirect to "/register?reason=You%20didn't%20enter%20an%20email%20address.%20Please%20try%20again!" unless user_registered?
+    else
+      erb :new_user
+    end
     # keep this line of code in place to protect this sacred
     # page from interlopers who have not properly completed
     # the maze you are constructing. You will need to implement
@@ -39,9 +47,9 @@ class RegistrationsController < ApplicationController
   # them what they've done wrong?
 
   def user_registered?
+    params[:email] != ""
     # TODO: you'll need a way for your registration to set a value that
     # will make this true when your /new looks at it.
-    false
   end
 
 end
