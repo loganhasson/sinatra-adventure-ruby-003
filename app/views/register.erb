@@ -3,8 +3,8 @@
     <title>Registration</title>
   </head>
   <body>
-    <% if params[:reason] %>
-    <p>You didn't enter an email address! Please try again.</p>
+    <% if session[:error_type] %>
+    <p><%= session[:error_type] %></p>
     <% end %>
     <p>Register</p>
     <form action="/register" method="post">
