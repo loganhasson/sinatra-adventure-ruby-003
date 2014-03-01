@@ -28,20 +28,22 @@ class RatPack
         self.singleton_class.send(:alias_method, :old_inherited, :inherited)
         def self.inherited(subclass)
           old_inherited(subclass)
-          after do
-            if response.redirect?
-              sanitized_path = response.location.gsub(RatPack::Configure.root,"")
-              split_path = sanitized_path.split("/").reject{|e| e.empty?}
-            else
-              split_path = request.path.split("/").reject{|e| e.empty?}
-            end
-            puts "Body Empty: #{response.body.empty?}"
-            puts "Split Path: #{split_path.inspect}"
-            puts "View: #{RatPack::Helpers.get_view(split_path)}"
-            puts "Controller: #{subclass.name}"
-            binding.pry
-            if response.body.empty?
-              body erb RatPack::Helpers.get_view(split_path)
+          after '/*?' do |path|
+            if request.path[1..-1] == path || (response.redirect? && response.location.gsub(RatPack::Configure.root,"") == path)
+              if response.redirect?
+                sanitized_path = response.location.gsub(RatPack::Configure.root,"")
+                split_path = sanitized_path.split("/").reject{|e| e.empty?}
+              else
+                split_path = request.path.split("/").reject{|e| e.empty?}
+              end
+              puts "Body Empty: #{response.body.empty?}"
+              puts "Split Path: #{split_path.inspect}"
+              puts "View: #{RatPack::Helpers.get_view(split_path, subclass.name)}"
+              puts "Controller: #{subclass.name}"
+              puts "Redirect: #{response.redirect?}"
+              if response.body.empty?
+                body erb RatPack::Helpers.get_view(split_path, subclass.name)
+              end
             end
           end
         end
@@ -60,12 +62,17 @@ class RatPack
 
   class Helpers
 
-    def self.get_view(split_path)
-      # TODO: Support these options
-      # random_path => "/anything" => ["anything"]
+    def self.get_view(split_path, controller_name)
+      class_name = controller_name.gsub("Controller", "").downcase
 
-      if split_path.size == 1 || split_path.empty?
+      if split_path.empty?
         :index
+      elsif split_path.size == 1
+        if split_path.first == class_name
+          :index
+        else
+          split_path.first.to_sym
+        end
       elsif split_path.include?("new")
         :new
       elsif split_path.include?("edit")
