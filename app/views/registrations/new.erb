@@ -1,9 +1,16 @@
 <html>
   <head>
-    <title>Huzzah!</title>
+    <title>Registration</title>
   </head>
   <body>
-    Thanks for registering for the site! You joined us with this email: <%= session[:email] %><br />
-    The next thing you should probably do is click <a href="/xyzzy">this link</a> to get started!
+    <% if session[:error_type] %>
+    <p><%= session[:error_type] %></p>
+    <% end %>
+    <p>Register</p>
+    <form action="/register" method="post">
+      Email: <input type="email" name="email"><br />
+      Password: <input type="password" name="password">
+      <input type="submit" value="Register">
+    </form>
   </body>
 </html>
