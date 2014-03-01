@@ -2,12 +2,15 @@ class RegistrationsController < ApplicationController
   enable :sessions
 
   get '/registrations/new' do
+    erb :new
   end
 
   get '/registrations/:email' do
-    # if !user_registered?
-    #   redirect to '/registrations/new'
-    # end
+    if !user_registered?
+      redirect to '/registrations/new'
+    else
+      erb :show
+    end
   end
 
   post '/register' do
