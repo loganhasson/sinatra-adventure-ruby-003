@@ -1,5 +1,6 @@
 require './environment'
 
 use HelloController
+use RootController
 use RegistrationsController
-run RootController
+run ApplicationController

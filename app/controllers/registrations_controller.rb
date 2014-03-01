@@ -8,14 +8,14 @@ class RegistrationsController < ApplicationController
   post '/register' do
     session[:email] = params[:email]
     session[:password] = params[:password]
-    redirect '/new'
+    redirect '/registrations/new'
   end
 
-  get '/new' do
+  get '/registrations/new' do
     if !user_registered?
       redirect to '/register'
     else
-      erb :new_user
+      erb :new
     end
   end
 
